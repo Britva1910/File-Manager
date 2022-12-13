@@ -1,5 +1,8 @@
 import { cwd } from 'process';
 import { INVALID_INPUT } from './constants.js';
+import { showCurrentDirectory } from './helpers/showCurrentDirectory.js';
+import { startMetod } from './helpers/startMetod.js';
+import { list } from './handlers/fs/list.js';
 
 
 
@@ -23,7 +26,7 @@ const sayWelcome = () => {
 	console.log(`Welcome to the File Manager, ${userData.username}!`);
 }
 
-const handlUserInput = (userInput) => {
+const handlUserInput = async (userInput) => {
 	const [command, ...arg] = userInput.trim().split(' ');
 
 	console.log('Current command is ', command);
@@ -33,6 +36,9 @@ const handlUserInput = (userInput) => {
 			console.log('up');
 			break;
 
+		case 'ls':
+			await startMetod(list);
+			break;
 
 		case '.exit':
 			console.log(`Thank you for using File Manager, ${userData.username}, goodbye!`);
@@ -43,6 +49,8 @@ const handlUserInput = (userInput) => {
 			console.log(INVALID_INPUT);
 
 	}
+
+	showCurrentDirectory();
 }
 
 
@@ -52,8 +60,6 @@ const init = () => {
 	process.stdin.on('data', (input) => {
 		handlUserInput(input.toString());
 	})
-
-	//showCurrentDirectory
 
 	process.on('SIGINT', () => {
 		console.log(`Thank you for using File Manager, ${userData.username}, goodbye!`);
