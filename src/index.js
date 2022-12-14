@@ -9,6 +9,8 @@ import { readFile } from './handlers/fs/read.js';
 import { create } from './handlers/fs/create.js';
 import { rename } from './handlers/fs/rename.js';
 import { copy } from './handlers/fs/copy.js';
+import { move } from './handlers/fs/move.js';
+import { remove } from './handlers/fs/delete.js';
 
 
 
@@ -70,6 +72,16 @@ const handlUserInput = async (userInput) => {
 
 		case 'cp':
 			await startMetod(copy, arg);
+			showCurrentDirectory();
+			break;
+
+		case 'mv':
+			await startMetod(move, arg);
+			showCurrentDirectory();
+			break;
+
+		case 'rm':
+			await startMetod(remove, arg);
 			showCurrentDirectory();
 			break;
 
