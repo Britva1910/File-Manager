@@ -1,4 +1,4 @@
-export const startMetod = async (colback, args = '') => {
+export const startMetod = async (colback, args) => {
 	try {
 		await colback(args);
 	} catch {

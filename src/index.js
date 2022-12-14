@@ -5,6 +5,7 @@ import { startMetod } from './helpers/startMetod.js';
 import { list } from './handlers/fs/list.js';
 import { homedir } from 'os';
 import { changeDirectory } from './handlers/changeDirectory.js';
+import { readFile } from './handlers/fs/read.js';
 
 
 
@@ -40,13 +41,17 @@ const handlUserInput = async (userInput) => {
 			break;
 
 		case 'cd':
-			//console.log(arg);
 			await startMetod(changeDirectory, arg[0]);
 			showCurrentDirectory();
 			break;
 
 		case 'ls':
 			await startMetod(list);
+			showCurrentDirectory();
+			break;
+
+		case 'cat':
+			await startMetod(readFile, arg[0]);
 			showCurrentDirectory();
 			break;
 
