@@ -1,7 +1,7 @@
-export const startMetod = async (colback, args) => {
+export const startMetod = async (colback, args = '') => {
 	try {
 		await colback(args);
-	} catch (e) {
-		console.log(e);
+	} catch {
+		console.log('Error in startMetod');
 	}
 }
