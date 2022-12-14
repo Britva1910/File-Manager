@@ -7,6 +7,7 @@ import { homedir } from 'os';
 import { changeDirectory } from './handlers/changeDirectory.js';
 import { readFile } from './handlers/fs/read.js';
 import { create } from './handlers/fs/create.js';
+import { rename } from './handlers/fs/rename.js';
 
 
 
@@ -58,6 +59,11 @@ const handlUserInput = async (userInput) => {
 
 		case 'add':
 			await startMetod(create, arg[0]);
+			showCurrentDirectory();
+			break;
+
+		case 'rn':
+			await startMetod(rename, arg);
 			showCurrentDirectory();
 			break;
 
