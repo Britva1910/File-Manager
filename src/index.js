@@ -6,6 +6,7 @@ import { list } from './handlers/fs/list.js';
 import { homedir } from 'os';
 import { changeDirectory } from './handlers/changeDirectory.js';
 import { readFile } from './handlers/fs/read.js';
+import { create } from './handlers/fs/create.js';
 
 
 
@@ -52,6 +53,11 @@ const handlUserInput = async (userInput) => {
 
 		case 'cat':
 			await startMetod(readFile, arg[0]);
+			showCurrentDirectory();
+			break;
+
+		case 'add':
+			await startMetod(create, arg[0]);
 			showCurrentDirectory();
 			break;
 
