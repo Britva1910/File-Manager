@@ -11,6 +11,7 @@ import { rename } from './handlers/fs/rename.js';
 import { copy } from './handlers/fs/copy.js';
 import { move } from './handlers/fs/move.js';
 import { remove } from './handlers/fs/delete.js';
+import { showOsInform } from './handlers/os/showOsInfo.js';
 
 
 
@@ -85,6 +86,11 @@ const handlUserInput = async (userInput) => {
 			showCurrentDirectory();
 			break;
 
+		case 'os':
+			await startMetod(showOsInform, arg);
+			showCurrentDirectory();
+			break;
+
 		case '.exit':
 			console.log(`Thank you for using File Manager, ${userData.username}, goodbye!`);
 			process.exit();
@@ -110,14 +116,14 @@ const init = () => {
 	})
 
 
-
 	process.on('SIGINT', () => {
 		console.log(`Thank you for using File Manager, ${userData.username}, goodbye!`);
 		process.exit();
 	})
 
-
-
+	//console.log(JSON.stringify(EOL));
+	//cpus()
+	//userInfo
 }
 
 init();
