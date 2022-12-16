@@ -12,6 +12,7 @@ import { copy } from './handlers/fs/copy.js';
 import { move } from './handlers/fs/move.js';
 import { remove } from './handlers/fs/delete.js';
 import { showOsInform } from './handlers/os/showOsInfo.js';
+import { calculateHash } from './handlers/hash/hash.js';
 
 
 
@@ -88,6 +89,11 @@ const handlUserInput = async (userInput) => {
 
 		case 'os':
 			await startMetod(showOsInform, arg);
+			showCurrentDirectory();
+			break;
+
+		case 'hash':
+			await startMetod(calculateHash, arg);
 			showCurrentDirectory();
 			break;
 
