@@ -22,6 +22,4 @@ export const calculateHash = async (path) => {
 			reject(data)
 		})
 	})
-
-
 };

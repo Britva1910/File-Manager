@@ -13,6 +13,8 @@ import { move } from './handlers/fs/move.js';
 import { remove } from './handlers/fs/delete.js';
 import { showOsInform } from './handlers/os/showOsInfo.js';
 import { calculateHash } from './handlers/hash/hash.js';
+import { compress } from './handlers/zlib/compress.js';
+import { decompress } from './handlers/zlib/decompress.js';
 
 
 
@@ -94,6 +96,16 @@ const handlUserInput = async (userInput) => {
 
 		case 'hash':
 			await startMetod(calculateHash, arg);
+			showCurrentDirectory();
+			break;
+
+		case 'compress':
+			await startMetod(compress, arg);
+			showCurrentDirectory();
+			break;
+
+		case 'decompress':
+			await startMetod(decompress, arg);
 			showCurrentDirectory();
 			break;
 
