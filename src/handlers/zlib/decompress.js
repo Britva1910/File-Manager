@@ -1,17 +1,22 @@
+import { resolve, parse } from "node:path";
+import { pipeline } from "node:stream/promises";
+import { createBrotliDecompress } from "node:zlib";
+import { createReadStream, createWriteStream } from 'node:fs';
+import { access } from "node:fs/promises";
 
+export const decompress = async (args) => {
+	let [pathToFile, pathDestination = ''] = args;
 
-export const decompress = async () => {
-	const [pathTofile, pathDestination = ''] = args;
-	//дописать проверку на пути к файлу и на наличие папки назначения
-	const fileName = parse(pathTofile).base;
+	const fileName = parse(pathToFile).name;
+	pathToFile = resolve(pathToFile);
+	pathDestination = resolve(pathDestination);
 
-	const zip = createBrotliВусompress();
-	const input = createReadStream(resolve(pathTofile));
-	input.on('error', () => { throw new Error() })
-	const output = createWriteStream(resolve(pathDestination, fileName + '.br'));
+	await access(pathToFile);
+	await access(pathDestination);
+
+	const zip = createBrotliDecompress();
+	const input = createReadStream(resolve(pathToFile));
+	const output = createWriteStream(resolve(pathDestination, fileName));
 
 	await pipeline(input, zip, output);
-
-	output.on('end', () => console.log('write end'))
-
 }
