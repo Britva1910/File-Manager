@@ -1,0 +1,133 @@
+import { cwd } from 'process';
+import { INVALID_INPUT } from './constants.js';
+import { showCurrentDirectory } from './helpers/showCurrentDirectory.js';
+import { startMetod } from './helpers/startMetod.js';
+import { list } from './handlers/fs/list.js';
+import { homedir } from 'os';
+import { changeDirectory } from './handlers/changeDirectory.js';
+import { readFile } from './handlers/fs/read.js';
+import { create } from './handlers/fs/create.js';
+import { rename } from './handlers/fs/rename.js';
+import { copy } from './handlers/fs/copy.js';
+import { move } from './handlers/fs/move.js';
+import { remove } from './handlers/fs/delete.js';
+import { showOsInform } from './handlers/os/showOsInfo.js';
+import { calculateHash } from './handlers/hash/hash.js';
+import { compress } from './handlers/zlib/compress.js';
+import { decompress } from './handlers/zlib/decompress.js';
+
+const userData = {
+	username: '',
+}
+
+const sayWelcome = () => {
+	const [executor, file, ...rest] = process.argv;
+
+	const arrArguments = rest[0].split('=');
+
+	if (arrArguments[0] === '--username') {
+		userData.username = arrArguments[1];
+	} else {
+		userData.username = 'anonymous';
+	}
+
+	console.log(`Welcome to the File Manager, ${userData.username}!`);
+}
+
+const handlUserInput = async (userInput) => {
+	const [command, ...arg] = userInput.trim().split(' ');
+
+	switch (command) {
+		case 'up':
+			await startMetod(changeDirectory, '..');
+			showCurrentDirectory();
+			break;
+
+		case 'cd':
+			await startMetod(changeDirectory, arg[0]);
+			showCurrentDirectory();
+			break;
+
+		case 'ls':
+			await startMetod(list);
+			showCurrentDirectory();
+			break;
+
+		case 'cat':
+			await startMetod(readFile, arg[0]);
+			showCurrentDirectory();
+			break;
+
+		case 'add':
+			await startMetod(create, arg[0]);
+			showCurrentDirectory();
+			break;
+
+		case 'rn':
+			await startMetod(rename, arg);
+			showCurrentDirectory();
+			break;
+
+		case 'cp':
+			await startMetod(copy, arg);
+			showCurrentDirectory();
+			break;
+
+		case 'mv':
+			await startMetod(move, arg);
+			showCurrentDirectory();
+			break;
+
+		case 'rm':
+			await startMetod(remove, arg);
+			showCurrentDirectory();
+			break;
+
+		case 'os':
+			await startMetod(showOsInform, arg);
+			showCurrentDirectory();
+			break;
+
+		case 'hash':
+			await startMetod(calculateHash, arg);
+			showCurrentDirectory();
+			break;
+
+		case 'compress':
+			await startMetod(compress, arg);
+			showCurrentDirectory();
+			break;
+
+		case 'decompress':
+			await startMetod(decompress, arg);
+			showCurrentDirectory();
+			break;
+
+		case '.exit':
+			console.log(`Thank you for using File Manager, ${userData.username}, goodbye!`);
+			process.exit();
+
+		default:
+			console.log(INVALID_INPUT);
+	}
+}
+
+
+const init = () => {
+	sayWelcome();
+
+	process.chdir(homedir());
+
+	showCurrentDirectory();
+
+	process.stdin.on('data', (input) => {
+		handlUserInput(input.toString());
+	})
+
+	process.on('SIGINT', () => {
+		console.log(`Thank you for using File Manager, ${userData.username}, goodbye!`);
+		process.exit();
+	})
+}
+
+init();
