@@ -15,10 +15,9 @@ export const compress = async (args) => {
 		await access(pathToFile);
 		await access(pathDestination);
 
-
 		const zip = createBrotliCompress();
 		const input = createReadStream(pathToFile);
-		const output = createWriteStream(resolve(pathDestination, fileName + '.bgz'));
+		const output = createWriteStream(resolve(pathDestination, fileName + '.br'));
 
 		await pipeline(input, zip, output);
 	} catch {

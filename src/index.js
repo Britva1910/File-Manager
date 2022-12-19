@@ -16,10 +16,6 @@ import { calculateHash } from './handlers/hash/hash.js';
 import { compress } from './handlers/zlib/compress.js';
 import { decompress } from './handlers/zlib/decompress.js';
 
-
-
-
-
 const userData = {
 	username: '',
 }
@@ -40,8 +36,6 @@ const sayWelcome = () => {
 
 const handlUserInput = async (userInput) => {
 	const [command, ...arg] = userInput.trim().split(' ');
-
-	//console.log('Current command is ', command);
 
 	switch (command) {
 		case 'up':
@@ -113,12 +107,9 @@ const handlUserInput = async (userInput) => {
 			console.log(`Thank you for using File Manager, ${userData.username}, goodbye!`);
 			process.exit();
 
-
 		default:
 			console.log(INVALID_INPUT);
 	}
-
-
 }
 
 
@@ -133,15 +124,10 @@ const init = () => {
 		handlUserInput(input.toString());
 	})
 
-
 	process.on('SIGINT', () => {
 		console.log(`Thank you for using File Manager, ${userData.username}, goodbye!`);
 		process.exit();
 	})
-
-	//console.log(JSON.stringify(EOL));
-	//cpus()
-	//userInfo
 }
 
 init();

@@ -1,7 +1,7 @@
-import { readdir } from 'node:fs/promises';
-import { lstat } from 'node:fs/promises'
+import { readdir, lstat } from 'node:fs/promises';
 
 export const list = async () => {
+
 	const src = process.cwd();
 
 	const filesNames = await readdir(src);
@@ -29,6 +29,5 @@ export const list = async () => {
 			resolve();
 		})
 	})
-
 };
 

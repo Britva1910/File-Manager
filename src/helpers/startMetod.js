@@ -1,7 +1,9 @@
+import { ERROR_MESSAGE } from "../constants.js";
+
 export const startMetod = async (colback, args) => {
 	try {
 		await colback(args);
-	} catch (e) {
-		console.log('Error in startMetod', e);
+	} catch {
+		console.log(ERROR_MESSAGE);
 	}
 }
